@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section B</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Modal -->
+<div id="imageModal" class="modal">
+
+    <span class="close" onclick="closeModal()">&times;</span>
+
+    <img id="modalImg">
+
+    <div class="modal-content">
+
+        <h2 id="modalTitle"></h2>
+
+        <p id="modalDate"></p>
+
+        <p id="modalLocation"></p>
+
+        <p id="modalDescription"></p>
+
+    </div>
+
+</div>
+
+<header>
+    <h1>University of Asia Pacific </h1>
+    <h4>Department of Computer Science and Engineering </h4>
+     
+</header>
+
+<div class="slider">
+    <img id="sliderImage" src="Photo/2.png" alt="Slideshow Image">
+    <div class="counter" id="counter">
+        1 / 43
+    </div>
+</div>
+
+<h2>Here the full informaions</h2>
+
+<div class="gallery">
+
+ 
+
+<div class="card"
+     onclick="openModal(
+     'Photo/2.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/2.png">
+    <h3>Shirin </h3>
+</div>
+
+   <div class="card"
+     onclick="openModal(
+     'Photo/3.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/3.png">
+    <h3>Rita</h3>
+</div>
+
+
+    <div class="card"
+     onclick="openModal(
+     'Photo/4.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/4.png">
+    <h3>Mona</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/5.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/5.png">
+    <h3>Nadi</h3>
+</div>
+
+   <div class="card"
+     onclick="openModal(
+     'Photo/6.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/6.png">
+    <h3>Mobin</h3>
+</div>
+
+
+    <div class="card"
+     onclick="openModal(
+     'Photo/7.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/7.png">
+    <h3>Abrar</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/8.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/8.png">
+    <h3>Fataharul</h3>
+</div>
+
+<div class="card"
+     onclick="openModal(
+     'Photo/9.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/9.png">
+    <h3>Bonny</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/10.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/10.png">
+    <h3>Nidhi</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/11.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/11.png">
+    <h3>Jubair</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/12.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/12.png">
+    <h3>Annotoma</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/13.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/13.png">
+    <h3>Jobair</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/14.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/14.png">
+    <h3>Seba</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/15.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/15.png">
+    <h3>Sadia
+    
+    </h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/16.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/16.png">
+    <h3>Naziz</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/17.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/17.png">
+    <h3>Maria</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/18.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/18.png">
+    <h3>Likhon</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/19.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/19.png">
+    <h3>Fahim</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/20.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/20.png">
+    <h3>Shakil</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/21.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/21.png">
+    <h3>Himel</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/22.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/22.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/23.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/23.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/24.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/24.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/25.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/25.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/26.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/26.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/27.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/27.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/28.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/28.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/29.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/29.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/30.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/30.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/31.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/31.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/32.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/32.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/33.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/33.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/34.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/34.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/35.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/35.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/36.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/36.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/37.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/37.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/38.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/38.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/39.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/39.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/40.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/40.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/41.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/41.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/42.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/42.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/43.png',
+     'Shirin Akter',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/43.png">
+    <h3>Shirin Akter</h3>
+</div>
+<div class="card"
+     onclick="openModal(
+     'Photo/44.png',
+     'Sowrov',
+     'Hometown- Noakhali',
+     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+
+     <img src="Photo/44.png">
+    <h3>Sowrov</h3>
+</div>
+
+
+    <!-- Continue until Image 40 -->
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
