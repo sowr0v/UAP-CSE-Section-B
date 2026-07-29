@@ -72,7 +72,7 @@ setInterval(()=>{
 
 },2000);
 
-function openModal(img,title,date,location,description){
+function openModal(img,title,location,description,fblink){
 
     document.getElementById("imageModal").style.display="flex";
 
@@ -80,11 +80,11 @@ function openModal(img,title,date,location,description){
 
     document.getElementById("modalTitle").innerHTML=title;
 
-    document.getElementById("modalDate").innerHTML=date;
-
     document.getElementById("modalLocation").innerHTML=location;
 
     document.getElementById("modalDescription").innerHTML=description;
+
+    document.getElementById("modalFblink").href=fblink;
 
 }
 
