@@ -3,495 +3,891 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Section B</title>
+    <title>UAP CSE Batch 54 | Section B Directory</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<!-- Modal -->
-<div id="imageModal" class="modal">
 
-    <span class="close" onclick="closeModal()">&times;</span>
+<!-- Canvas for Confetti Celebration -->
+<canvas id="confettiCanvas"></canvas>
 
-    <img id="modalImg">
+<!-- Image Details & Student ID Modal -->
+<div id="imageModal" class="modal" role="dialog" aria-modal="true">
+    <span class="close" onclick="closeModal()" title="Close (Esc)">&times;</span>
+    <div class="modal-dialog">
+        <!-- Normal Profile View -->
+        <div id="modalNormalView" class="modal-profile-container">
+            <div class="modal-image-wrapper">
+                <img id="modalImg" src="" alt="Student Photo">
+            </div>
+            <div class="modal-content">
+                <div class="modal-top-bar">
+                    <h2 id="modalTitle">Student Name</h2>
+                    <button class="id-toggle-btn" onclick="toggleStudentIdCard(true)" title="View Digital Student ID Card">
+                        🪪 View ID Card
+                    </button>
+                </div>
 
-    <div class="modal-content">
+                <div class="modal-tags" id="modalTags">
+                    <span class="tag tag-batch">CSE Batch 54</span>
+                    <span class="tag tag-section">Section B</span>
+                    <span class="tag tag-blood" id="modalBloodTag">Blood: --</span>
+                </div>
+                
+                <div class="modal-info-list">
+                    <p id="modalName"><strong>Name:</strong> <span>--</span></p>
+                    <p id="modalReg"><strong>Registration ID:</strong> <span id="modalRegText">--</span></p>
+                    <p id="modalRoll"><strong>Class Roll:</strong> <span id="modalRollText">--</span></p>
+                    <p id="modalEmailRow"><strong>UAP Email:</strong> <span id="modalEmailText">--</span></p>
+                    <p id="modalHometown"><strong>Hometown:</strong> <span>--</span></p>
+                    <p id="modalMobile"><strong>Mobile:</strong> <span>--</span></p>
+                    <p id="modalEmergency"><strong>Emergency Contact:</strong> <span id="modalEmergencyText">--</span></p>
+                    <p id="modalBio"><strong>Note:</strong> <span>--</span></p>
+                </div>
 
-        <h2 id="modalTitle"></h2>
+                <!-- Quick Action Buttons -->
+                <div class="modal-actions" id="modalActions">
+                    <a id="modalGmailBtn" href="#" target="_blank" class="btn btn-gmail" style="display:none;" title="Open in Gmail">
+                        ✉️ Gmail
+                    </a>
+                    <a id="modalCallBtn" href="#" class="btn btn-call" style="display:none;" title="Call Phone">
+                        📞 Call Now
+                    </a>
+                    <a id="modalWaBtn" href="#" target="_blank" class="btn btn-whatsapp" style="display:none;" title="Chat on WhatsApp">
+                        💬 WhatsApp
+                    </a>
+                    <button id="modalVcfBtn" onclick="downloadCurrentStudentVCard()" class="btn btn-vcard" title="Save Contact to Phone (.vcf)">
+                        💾 Save Contact (.vcf)
+                    </button>
+                    <button id="modalCopyEmailBtn" onclick="copyCurrentStudentEmail()" class="btn btn-secondary" title="Copy email address">
+                        📋 Copy Mail
+                    </button>
+                </div>
+            </div>
+        </div>
 
-        <p id="modalDate"></p>
+        <!-- Virtual Digital Student ID Badge View (Flipped) -->
+        <div id="modalIdCardView" class="digital-id-card" style="display:none;">
+            <div class="id-card-header">
+                <div class="id-university">UNIVERSITY OF ASIA PACIFIC</div>
+                <div class="id-department">Department of Computer Science &amp; Engineering</div>
+            </div>
+            
+            <div class="id-card-body">
+                <div class="id-photo-container">
+                    <img id="idCardPhoto" src="" alt="Student Photo">
+                    <div id="idCardBlood" class="id-blood-badge">A+</div>
+                </div>
+                <div class="id-details">
+                    <h3 id="idCardName">Student Full Name</h3>
+                    <div class="id-row"><span>Student ID:</span> <strong id="idCardReg">23201056</strong></div>
+                    <div class="id-row"><span>Class Roll:</span> <strong id="idCardRoll">56</strong></div>
+                    <div class="id-row"><span>Program:</span> <strong>B.Sc. in CSE</strong></div>
+                    <div class="id-row"><span>Batch:</span> <strong>54 (Section B)</strong></div>
+                    <div class="id-row"><span>District:</span> <strong id="idCardDist">Noakhali</strong></div>
+                </div>
+            </div>
 
-        <p id="modalLocation"></p>
-
-        <p id="modalDescription"></p>
-
+            <div class="id-card-footer">
+                <div class="id-barcode">||| | |||| | ||| |||| || |||| | ||| |||</div>
+                <button class="btn btn-secondary btn-sm" onclick="toggleStudentIdCard(false)">
+                    ⬅ Back to Profile
+                </button>
+            </div>
+        </div>
     </div>
-
 </div>
 
+<!-- Email All Classmates Modal -->
+<div id="emailAllModal" class="modal" role="dialog" aria-modal="true">
+    <span class="close" onclick="closeEmailAllModal()" title="Close (Esc)">&times;</span>
+    <div class="modal-dialog email-modal-dialog">
+        <div class="modal-content email-modal-content">
+            <div class="email-modal-header">
+                <div class="email-modal-icon">📧</div>
+                <div>
+                    <h2 id="emailModalTitle">Email All Classmates</h2>
+                    <p id="emailModalSubtitle">UAP CSE Batch 54, Section B &bull; 45 Classmates</p>
+                </div>
+            </div>
+
+            <p id="emailModalDesc" style="color:var(--text-muted); margin-bottom:16px; font-size:0.95rem;">
+                Choose how you want to send your announcement. Classmates' emails are in <strong>BCC</strong> for privacy:
+            </p>
+
+            <div class="email-options-list">
+                <a id="gmailAllBtn" href="#" target="_blank" class="email-option-card gmail">
+                    <div class="option-icon">🔴</div>
+                    <div class="option-text">
+                        <strong id="optGmailTitle">Open in Gmail (Web) — Recommended</strong>
+                        <span id="optGmailSub">Opens browser Gmail compose tab with all 45 emails in BCC</span>
+                    </div>
+                    <span class="option-arrow">➔</span>
+                </a>
+
+                <a id="defaultMailAllBtn" href="#" class="email-option-card default-mail">
+                    <div class="option-icon">💻</div>
+                    <div class="option-text">
+                        <strong id="optAppTitle">Open in Desktop Mail App</strong>
+                        <span id="optAppSub">Opens Outlook, Windows Mail, or Apple Mail</span>
+                    </div>
+                    <span class="option-arrow">➔</span>
+                </a>
+
+                <button onclick="copyAllEmails()" class="email-option-card copy-mail">
+                    <div class="option-icon">📋</div>
+                    <div class="option-text">
+                        <strong id="optCopyTitle">Copy All 45 Emails to Clipboard</strong>
+                        <span id="optCopySub">One-click copy to paste into Google Drive, Classroom, or Mail</span>
+                    </div>
+                    <span class="option-arrow">📋</span>
+                </button>
+            </div>
+
+            <div class="email-preview-box">
+                <label for="allEmailsTextarea"><strong>Class Mailing List (45 Emails):</strong></label>
+                <textarea id="allEmailsTextarea" readonly onclick="this.select()" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add / Edit Campus Memory Modal -->
+<div id="memoryFormModal" class="modal" role="dialog" aria-modal="true">
+    <span class="close" onclick="closeMemoryFormModal()" title="Close (Esc)">&times;</span>
+    <div class="modal-dialog memory-modal-dialog">
+        <div class="modal-content memory-form-content">
+            <div class="modal-top-bar">
+                <h2 id="memoryFormTitle">Add New Campus Memory</h2>
+            </div>
+            
+            <form id="memoryForm" onsubmit="handleMemoryFormSubmit(event)">
+                <input type="hidden" id="memoryEditId" value="">
+                
+                <div class="form-group">
+                    <label for="memInputTitle"><strong>Title / Caption: <span style="color:#ef4444;">*</span></strong></label>
+                    <input type="text" id="memInputTitle" placeholder="e.g. Batch Tour 2024, CSE Lab Day, Campus Adda..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="memInputDate"><strong>Date / Occasion:</strong></label>
+                    <input type="text" id="memInputDate" placeholder="e.g. October 2024 / Spring Semester">
+                </div>
+
+                <div class="form-group">
+                    <label for="memInputDesc"><strong>Description / Note:</strong></label>
+                    <textarea id="memInputDesc" rows="3" placeholder="Share a short note or story about this moment..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label><strong>Photo (Choose File or paste Link): <span style="color:#ef4444;">*</span></strong></label>
+                    <div class="photo-upload-options">
+                        <div class="file-btn-wrapper">
+                            <label for="memInputFile" class="btn btn-secondary file-choose-btn">
+                                📁 Upload Photo from Computer / Phone
+                            </label>
+                            <input type="file" id="memInputFile" accept="image/*" onchange="handleMemoryFileSelect(event)" style="display:none;">
+                        </div>
+                        <span class="upload-or-text">OR</span>
+                        <input type="text" id="memInputUrl" class="url-input" placeholder="Paste Image URL / Path (e.g. Photo/background 1.png)" oninput="handleMemoryUrlInput(event)">
+                    </div>
+
+                    <!-- Image Preview Container -->
+                    <div class="memory-preview-box" id="memPreviewBox">
+                        <img id="memPreviewImg" src="" alt="Selected Image Preview" style="display:none;">
+                        <span id="memPreviewPlaceholder" style="color:var(--text-muted); font-size:0.9rem;">No photo selected yet</span>
+                    </div>
+                </div>
+
+                <div class="modal-actions form-actions">
+                    <button type="submit" class="btn btn-primary" id="saveMemorySubmitBtn">
+                        💾 Save Memory
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeMemoryFormModal()">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Campus Memory Fullscreen Viewer Modal -->
+<div id="memoryViewerModal" class="modal" role="dialog" aria-modal="true">
+    <span class="close" onclick="closeMemoryViewerModal()" title="Close (Esc)">&times;</span>
+    <div class="modal-dialog memory-view-dialog">
+        <div class="memory-viewer-wrapper">
+            <div class="memory-viewer-img-container">
+                <img id="viewerImg" src="" alt="Campus Memory Full View">
+            </div>
+            <div class="memory-viewer-content">
+                <div class="viewer-meta-row">
+                    <span class="tag tag-section" id="viewerDateTag">📅 Date</span>
+                </div>
+                <h2 id="viewerTitle">Memory Title</h2>
+                <p id="viewerDesc" class="viewer-desc-text">Description goes here...</p>
+                <div class="viewer-actions-row">
+                    <button class="btn btn-secondary btn-sm" id="viewerEditBtn">
+                        ✏️ Edit Memory
+                    </button>
+                    <button class="btn btn-danger btn-sm" id="viewerDeleteBtn">
+                        🗑️ Delete
+                    </button>
+                    <button class="btn btn-primary btn-sm" onclick="closeMemoryViewerModal()">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- UAP CSE Cover Page Generator Studio Modal -->
+<div id="coverPageModal" class="modal cover-modal" role="dialog" aria-modal="true">
+    <span class="close" onclick="closeCoverPageModal()" title="Close (Esc)">&times;</span>
+    <div class="modal-dialog cover-modal-dialog">
+        <div class="cover-modal-header">
+            <div class="cover-modal-title-group">
+                <span class="cover-icon">📄</span>
+                <div>
+                    <h2>UAP CSE Cover Page Generator</h2>
+                    <p>Official Academic Cover Page Studio for Assignments, Lab Reports &amp; Projects</p>
+                </div>
+            </div>
+            <div class="cover-header-actions">
+                <button class="btn btn-primary" onclick="printCoverPage()" title="Print directly or save as clean PDF">
+                    🖨️ Print / Save as PDF
+                </button>
+                <button class="btn btn-vcard" onclick="downloadCoverPageWord()" title="Download as editable Microsoft Word document (.doc)">
+                    📥 Download Word (.doc)
+                </button>
+                <button class="btn btn-secondary" onclick="copyCoverPageText()" title="Copy cover page text template">
+                    📋 Copy Text
+                </button>
+                <button class="btn btn-reset" onclick="resetCoverPageForm()" title="Reset to default template">
+                    🔄 Reset
+                </button>
+            </div>
+        </div>
+
+        <div class="cover-studio-layout">
+            <!-- Left Pane: Customization Form -->
+            <div class="cover-form-pane">
+                <h3 class="pane-section-title">⚙️ Customization Settings</h3>
+
+                <!-- 1. Quick Student Autofill -->
+                <div class="form-group">
+                    <label for="coverStudentSelect"><strong>⚡ Autofill from Section B Student:</strong></label>
+                    <select id="coverStudentSelect" onchange="handleCoverStudentSelect(this.value)">
+                        <option value="">-- Choose a Classmate to Autofill --</option>
+                        <!-- Populated dynamically from allStudents -->
+                    </select>
+                </div>
+
+                <!-- 2. Document & Report Details -->
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label for="coverReportType"><strong>Report Type:</strong></label>
+                        <select id="coverReportType" onchange="updateCoverPreview()">
+                            <option value="ASSIGNMENT">Assignment</option>
+                            <option value="LAB REPORT">Lab Report</option>
+                            <option value="PROJECT REPORT">Project Report</option>
+                            <option value="TERM PAPER">Term Paper</option>
+                            <option value="PRESENTATION REPORT">Presentation Report</option>
+                        </select>
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="coverReportNo"><strong>Assignment / Lab No:</strong></label>
+                        <input type="text" id="coverReportNo" value="01" placeholder="e.g. 01, 02, Final" oninput="updateCoverPreview()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="coverAssignmentTitle"><strong>Assignment / Experiment Title:</strong></label>
+                    <input type="text" id="coverAssignmentTitle" value="Implementation of Data Structures and Graph Algorithms" placeholder="Enter report / assignment topic" oninput="updateCoverPreview()">
+                </div>
+
+                <!-- 3. Course Details -->
+                <div class="form-group">
+                    <label for="coverCourseQuickSelect"><strong>Course Quick Select:</strong></label>
+                    <select id="coverCourseQuickSelect" onchange="handleCoverCourseSelect(this.value)">
+                        <option value="">-- Select Common CSE Course --</option>
+                        <option value="CSE 207|Algorithms">CSE 207: Algorithms</option>
+                        <option value="CSE 208|Algorithms Lab">CSE 208: Algorithms Lab</option>
+                        <option value="CSE 205|Data Structures">CSE 205: Data Structures</option>
+                        <option value="CSE 206|Data Structures Lab">CSE 206: Data Structures Lab</option>
+                        <option value="CSE 203|Object Oriented Programming">CSE 203: Object Oriented Programming</option>
+                        <option value="CSE 204|Object Oriented Programming Lab">CSE 204: OOP Lab</option>
+                        <option value="CSE 201|Discrete Mathematics">CSE 201: Discrete Mathematics</option>
+                        <option value="CSE 105|Structured Programming">CSE 105: Structured Programming</option>
+                        <option value="CSE 106|Structured Programming Lab">CSE 106: Structured Programming Lab</option>
+                        <option value="CSE 311|Database Management Systems">CSE 311: Database Management Systems</option>
+                        <option value="CSE 312|Database Management Systems Lab">CSE 312: DBMS Lab</option>
+                        <option value="custom">Custom Course...</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label for="coverCourseCode"><strong>Course Code:</strong></label>
+                        <input type="text" id="coverCourseCode" value="CSE 207" placeholder="e.g. CSE 207" oninput="updateCoverPreview()">
+                    </div>
+                    <div class="form-group flex-2">
+                        <label for="coverCourseTitle"><strong>Course Title:</strong></label>
+                        <input type="text" id="coverCourseTitle" value="Algorithms" placeholder="e.g. Algorithms" oninput="updateCoverPreview()">
+                    </div>
+                </div>
+
+                <!-- 4. Submitted To (Teacher Details) -->
+                <h4 class="form-subtitle">👨‍🏫 Instructor / Faculty Details (Submitted To):</h4>
+                <div class="form-group">
+                    <label for="coverTeacherQuickSelect"><strong>⚡ Quick Select from UAP CSE Faculty:</strong></label>
+                    <select id="coverTeacherQuickSelect" onchange="handleCoverTeacherSelect(this.value)">
+                        <option value="">-- Choose Course Teacher from 39 Active Faculty Members --</option>
+                        <!-- Populated dynamically from faculty.json -->
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group flex-2">
+                        <label for="coverTeacherName"><strong>Teacher's Name:</strong></label>
+                        <input type="text" id="coverTeacherName" value="Course Instructor Name" placeholder="e.g. Dr. / Mr. / Ms." oninput="updateCoverPreview()">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="coverTeacherDesignation"><strong>Designation:</strong></label>
+                        <input type="text" id="coverTeacherDesignation" value="Lecturer" placeholder="e.g. Assistant Professor" oninput="updateCoverPreview()">
+                    </div>
+                </div>
+
+                <!-- 5. Submitted By (Student Details) -->
+                <h4 class="form-subtitle">🎓 Student Details (Submitted By):</h4>
+                <div class="form-row">
+                    <div class="form-group flex-2">
+                        <label for="coverStudentName"><strong>Student Name:</strong></label>
+                        <input type="text" id="coverStudentName" value="Mijanur Rahman Sowrov" placeholder="Your Full Name" oninput="updateCoverPreview()">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="coverStudentReg"><strong>Registration ID:</strong></label>
+                        <input type="text" id="coverStudentReg" value="23201110" placeholder="e.g. 23201110" oninput="updateCoverPreview()">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label for="coverStudentRoll"><strong>Roll No:</strong></label>
+                        <input type="text" id="coverStudentRoll" value="110" placeholder="e.g. 110" oninput="updateCoverPreview()">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="coverStudentBatch"><strong>Batch:</strong></label>
+                        <input type="text" id="coverStudentBatch" value="54" placeholder="e.g. 54" oninput="updateCoverPreview()">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="coverStudentSection"><strong>Section:</strong></label>
+                        <input type="text" id="coverStudentSection" value="B" placeholder="e.g. B" oninput="updateCoverPreview()">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label for="coverStudentSemester"><strong>Year / Semester:</strong></label>
+                        <input type="text" id="coverStudentSemester" value="2nd Year, 1st Semester" placeholder="e.g. 2nd Year, 1st Semester" oninput="updateCoverPreview()">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="coverSubmissionDate"><strong>Submission Date:</strong></label>
+                        <input type="text" id="coverSubmissionDate" value="" placeholder="e.g. November 15, 2024" oninput="updateCoverPreview()">
+                    </div>
+                </div>
+
+                <!-- 6. Additional Options -->
+                <div class="form-group checkbox-group">
+                    <label class="custom-checkbox-label">
+                        <input type="checkbox" id="coverShowEvaluationTable" checked onchange="updateCoverPreview()">
+                        <span>Include Teacher's Evaluation / Marks Matrix Box</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="coverBorderStyle"><strong>Border Style:</strong></label>
+                    <select id="coverBorderStyle" onchange="updateCoverPreview()">
+                        <option value="double">Classic Formal (Double Border)</option>
+                        <option value="single">Modern Clean (Single Border)</option>
+                        <option value="none">No Border</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Right Pane: Live Printable A4 Preview -->
+            <div class="cover-preview-pane">
+                <div class="preview-toolbar">
+                    <span>📄 Real-time A4 Print Preview</span>
+                    <button class="btn btn-sm btn-primary" onclick="printCoverPage()">
+                        🖨️ Quick Print
+                    </button>
+                </div>
+
+                <div class="a4-sheet-container">
+                    <div id="coverPagePreviewSheet" class="cover-sheet a4-page border-double">
+                        <!-- Rendered in real-time by script.js -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Header -->
 <header>
-    
-    <h1>University of Asia Pacific </h1>
-    <h4>Department of Computer Science and Engineering </h4>
-     
+    <div class="top-nav-bar">
+        <div class="celebrate-btn-wrapper">
+            <button class="celebrate-btn" onclick="fireConfetti()" title="Celebrate Batch 54!">
+                🎉 Celebrate Batch 54
+            </button>
+        </div>
+        
+        <!-- Language Switcher Toggle -->
+        <div class="lang-switch-wrapper">
+            <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()" title="Switch Language / ভাষা পরিবর্তন">
+                🌐 <span id="currentLangLabel">বাংলা</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="header-container">
+        <h1 id="headerTitle">University of Asia Pacific</h1>
+        <h4 id="headerSubtitle">Department of Computer Science and Engineering</h4>
+        <div class="batch-badge" id="headerBadge">Batch 54 &bull; Section B Directory</div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <button class="tab-btn active" id="tabStudentsBtn" onclick="switchTab('students')">🎓 Students Directory</button>
+        <button class="tab-btn" id="tabAnalyticsBtn" onclick="switchTab('analytics')">📊 Class Analytics</button>
+        <button class="tab-btn" id="tabMemoriesBtn" onclick="switchTab('memories')">📸 Campus Memories</button>
+        <button class="tab-btn" id="tabAboutBtn" onclick="switchTab('about')">ℹ️ About &amp; Resources</button>
+    </nav>
 </header>
 
-<div class="slider">
-    <img id="sliderImage" src="Photo/2.png" alt="Slideshow Image">
-    <div class="counter" id="counter">
-        1 / 43
-    </div>
-</div>
+<main class="main-content">
 
-<h2>Website is work in process...</h2>
-<div class="gallery">
+    <!-- TAB 1: Students Directory Section -->
+    <section id="studentsSection" class="tab-content active">
 
- 
+        <!-- Slideshow Banner -->
+        <div class="slider-wrapper">
+            <div class="slider" id="sliderContainer">
+                <button class="slider-btn prev-btn" id="sliderPrev" title="Previous Image">&#10094;</button>
+                <img id="sliderImage" src="Photo/2.png" alt="Slideshow Image">
+                <button class="slider-btn next-btn" id="sliderNext" title="Next Image">&#10095;</button>
+                
+                <div class="counter" id="counter">1 / 43</div>
+                <div class="slider-hint" id="sliderHintText">Hover to pause &bull; Click arrows to navigate</div>
+            </div>
+        </div>
 
-<div class="card"
-     onclick="openModal(
-     'Photo/2.png',
-     'Shirin Akter',
-     'Hometown- Noakhali')">
+        <!-- Search & Filter Controls Card -->
+        <div class="controls-card">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search by name, roll, reg ID, hometown, mobile, blood group..." autocomplete="off">
+                <button id="clearSearchBtn" class="clear-btn" title="Clear search" style="display:none;">&times;</button>
+            </div>
 
-     <img src="Photo/2.png">
-    <h3>Shirin </h3>
-</div>
+            <div class="filter-group">
+                <div class="filter-item">
+                    <label for="bloodGroupFilter" id="bloodFilterLabel">🩸 Blood Group:</label>
+                    <select id="bloodGroupFilter">
+                        <option value="all">All Groups</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                </div>
 
-   <div class="card"
-     onclick="openModal(
-     'Photo/3.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'Mob-01609009180')">
+                <div class="filter-item">
+                    <label for="hometownFilter" id="hometownFilterLabel">📍 Hometown:</label>
+                    <select id="hometownFilter">
+                        <option value="all">All Hometowns</option>
+                    </select>
+                </div>
 
-     <img src="Photo/3.png">
-    <h3>Rita</h3>
-</div>
+                <button id="resetFiltersBtn" class="btn btn-reset">Reset</button>
+            </div>
 
+            <div class="results-bar">
+                <span id="resultsCount">Showing 45 of 45 students</span>
+            </div>
+        </div>
 
-    <div class="card"
-     onclick="openModal(
-     'Photo/4.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+        <!-- Students Gallery Grid -->
+        <div class="gallery" id="studentsGallery">
+            <!-- Dynamically populated by script.js -->
+        </div>
 
-     <img src="Photo/4.png">
-    <h3>Mona</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/5.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
+        <!-- No Results Message -->
+        <div id="noResultsMsg" class="no-results" style="display:none;">
+            <div class="no-results-icon">🔎</div>
+            <h3 id="noResultsTitle">No students found</h3>
+            <p id="noResultsDesc">Try searching with another name, district, or reset your filters.</p>
+            <button onclick="resetAllFilters()" class="btn btn-primary" id="resetAllBtn">Reset Filters</button>
+        </div>
 
-     <img src="Photo/5.png">
-    <h3>Nadi</h3>
-</div>
-
-   <div class="card"
-     onclick="openModal(
-     'Photo/6.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/6.png">
-    <h3>Mobin</h3>
-</div>
-
-
-    <div class="card"
-     onclick="openModal(
-     'Photo/7.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/7.png">
-    <h3>Abrar</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/8.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/8.png">
-    <h3>Fataharul</h3>
-</div>
-
-<div class="card"
-     onclick="openModal(
-     'Photo/9.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/9.png">
-    <h3>Bonny</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/10.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/10.png">
-    <h3>Nidhi</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/11.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/11.png">
-    <h3>Jubair</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/12.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/12.png">
-    <h3>Annotoma</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/13.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/13.png">
-    <h3>Jobair</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/14.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/14.png">
-    <h3>Seba</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/15.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/15.png">
-    <h3>Sadia
-    
-    </h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/16.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/16.png">
-    <h3>Naziz</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/17.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/17.png">
-    <h3>Maria</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/18.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/18.png">
-    <h3>Likhon</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/19.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/19.png">
-    <h3>Fahim</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/20.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/20.png">
-    <h3>Shakil</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/21.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/21.png">
-    <h3>Himel</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/22.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/22.png">
-    <h3>Labib</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/23.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/23.png">
-    <h3>Arnob</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/24.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/24.png">
-    <h3>Anisha</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/25.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/25.png">
-    <h3>Jannat</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/26.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/26.png">
-    <h3>Aysha</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/27.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/27.png">
-    <h3>Tasfiah</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/28.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/28.png">
-    <h3>Maya</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/29.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/29.png">
-    <h3>Hira</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/30.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/30.png">
-    <h3>Izzab</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/31.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/31.png">
-    <h3>Kona</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/32.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/32.png">
-    <h3>Humayra</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/33.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/33.png">
-    <h3>Onti</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/34.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/34.png">
-    <h3>Tushar</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/35.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/35.png">
-    <h3>Intisar</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/36.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/36.png">
-    <h3>Lishamoni</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/37.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/37.png">
-    <h3>Niha</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/38.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/38.png">
-    <h3>Samdhani</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/39.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/39.png">
-    <h3>Adil</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/40.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/40.png">
-    <h3>Mouri</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/41.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/41.png">
-    <h3>Snigdha</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/42.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/42.png">
-    <h3>Mira</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/43.png',
-     'Shirin Akter',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/43.png">
-    <h3>Rohan</h3>
-</div>
-<div class="card"
-     onclick="openModal(
-     'Photo/44.png',
-     'Sowrov',
-     'Hometown- Noakhali',
-     'This photo was taken during the sunset at Cox\'s Bazar beach.')">
-
-     <img src="Photo/44.png">
-    <h3>Sowrov</h3>
-</div>
+    </section>
 
 
-    <!-- Continue until Image 40 -->
+    <!-- TAB 2: Class Analytics & Demographics Section -->
+    <section id="analyticsSection" class="tab-content" style="display:none;">
+        <div class="section-title">
+            <h2 id="analyticsTitle">Class Demographics &amp; Analytics</h2>
+            <p id="analyticsSubtitle">Insights, regional representation, and blood donor directory of CSE Batch 54, Section B</p>
+        </div>
 
-</div>
+        <!-- Summary Stat KPI Cards -->
+        <div class="stats-overview-grid">
+            <div class="stat-card">
+                <div class="stat-icon">🎓</div>
+                <div class="stat-number" id="statTotalStudents">45</div>
+                <div class="stat-label">Total Classmates</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🩸</div>
+                <div class="stat-number" id="statBloodDonors">26</div>
+                <div class="stat-label">Registered Blood Donors</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📍</div>
+                <div class="stat-number" id="statDistricts">23</div>
+                <div class="stat-label">Districts Represented</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📧</div>
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Institutional UAP Mails</div>
+            </div>
+        </div>
+
+        <!-- Analytics Charts & Breakdowns -->
+        <div class="analytics-detail-grid">
+            <!-- Blood Group Distribution -->
+            <div class="analytics-card">
+                <h3>🩸 Blood Group Directory</h3>
+                <p class="analytics-card-desc">Click any blood group to immediately filter eligible classmates:</p>
+                <div id="bloodBarsContainer" class="distribution-bars">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Hometown / Regional Representation -->
+            <div class="analytics-card">
+                <h3>📍 Regional / District Representation</h3>
+                <p class="analytics-card-desc">Students across Bangladesh studying together at UAP:</p>
+                <div id="districtListContainer" class="district-tags-grid">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 3: Campus Memories Section -->
+    <section id="memoriesSection" class="tab-content" style="display:none;">
+        <div class="section-title">
+            <h2 id="memoriesTitle">Campus Memories &amp; Moments</h2>
+            <p id="memoriesSubtitle">Capturing beautiful memories from our days at University of Asia Pacific</p>
+        </div>
+
+        <!-- Memories Action Toolbar -->
+        <div class="memories-toolbar">
+            <div class="memories-stats">
+                <span id="memoriesCountPill" class="memory-count-pill">📸 4 Memories Captured</span>
+            </div>
+            <div class="memories-btns">
+                <button class="btn btn-primary add-memory-btn" onclick="openAddMemoryModal()">
+                    ➕ <span id="addMemoryBtnLabel">Add New Memory</span>
+                </button>
+                <button class="btn btn-secondary reset-memory-btn" onclick="restoreDefaultMemories()" title="Restore Original Photos">
+                    🔄 <span id="restoreMemoriesBtnLabel">Reset Defaults</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Dynamic Memories Grid -->
+        <div class="memories-grid" id="memoriesGrid">
+            <!-- Dynamically populated by script.js -->
+        </div>
+
+        <!-- Empty state message if all memories deleted -->
+        <div id="noMemoriesMsg" class="no-results" style="display:none;">
+            <div class="no-results-icon">📸</div>
+            <h3 id="noMemoriesTitle">No memories saved yet</h3>
+            <p id="noMemoriesDesc">Add your favorite photos with classmates or restore original defaults.</p>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
+                <button onclick="openAddMemoryModal()" class="btn btn-primary">➕ Add Memory</button>
+                <button onclick="restoreDefaultMemories()" class="btn btn-secondary">🔄 Restore Defaults</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 4: About & Academic Resources Section -->
+    <section id="aboutSection" class="tab-content" style="display:none;">
+        <div class="section-title">
+            <h2 id="aboutTitle">About Section B &amp; Academic Resources</h2>
+            <p id="aboutSubtitle">Essential links, course resources, and contact information for our classmates</p>
+        </div>
+
+        <!-- Section B Broadcast & Contacts Bar -->
+        <div class="batch-mail-bar about-mail-hub">
+            <div class="mail-bar-left">
+                <span class="mail-icon">📧</span>
+                <span class="mail-bar-text" id="broadcastBarText">
+                    <strong>Section B Broadcast &amp; Contacts:</strong> Send class notices, slides, or save entire batch contacts
+                </span>
+            </div>
+            <div class="mail-bar-buttons">
+                <button onclick="emailAllClassmates()" class="btn btn-email" title="Open mail client with all classmates' emails in BCC">
+                    ✉️ Email All Classmates
+                </button>
+                <button onclick="downloadAllVCards()" class="btn btn-vcard" title="Download all 45 contacts in one .vcf file for your phone">
+                    💾 Save All Contacts (.vcf)
+                </button>
+                <button onclick="copyAllEmails()" class="btn btn-secondary" id="copyEmailsBtn" title="Copy all 45 emails to clipboard">
+                    📋 Copy All Emails
+                </button>
+            </div>
+        </div>
+
+        <div class="about-grid">
+            <!-- Cover Page Generator Card -->
+            <div class="info-card featured-cover-card">
+                <div class="info-icon">📑</div>
+                <h3>Cover Page Generator</h3>
+                <p>Generate standard cover pages for your CSE assignments, lab reports, and semester projects. 1-click autofill for any Batch 54 classmate.</p>
+                <button onclick="openCoverPageModal()" class="btn btn-primary resource-btn">
+                    📄 Create Cover Page
+                </button>
+            </div>
+            <!-- Academic Info Card -->
+            <div class="info-card" id="deptCard" onclick="toggleDepartmentDetails(true)" style="cursor:pointer;" title="Click to view Department Details and 39 Active Teachers">
+                <div class="info-icon">🏛️</div>
+                <h3>Department Details</h3>
+                <p><strong>University:</strong> University of Asia Pacific (UAP)</p>
+                <p><strong>Department:</strong> Computer Science &amp; Engineering</p>
+                <p><strong>Head of Dept:</strong> Prof. Dr. Nasima Begum</p>
+                <p><strong>Faculty:</strong> 39 Active Teachers &bull; Estd. 1996</p>
+                <button id="deptCardToggleBtn" onclick="event.stopPropagation(); toggleDepartmentDetails();" class="btn btn-primary resource-btn" style="margin-top:auto;">
+                    🏛️ View Department Details (39 Teachers)
+                </button>
+            </div>
+
+            <!-- Class Representative (CR) Card -->
+            <div class="info-card">
+                <div class="info-icon">👤</div>
+                <h3>Class Representatives (CR)</h3>
+                <p>For class schedule updates, assignments, and exam notifications, reach out to our Section CRs.</p>
+                <div class="cr-contact-box">
+                    <p><strong>Section Representative:</strong> Mijanur Rahman Sowrov &amp; Team</p>
+                    <p><strong>Contact:</strong> Available via Directory</p>
+                </div>
+            </div>
+
+            <!-- Batch Drive & Study Materials Card -->
+            <div class="info-card">
+                <div class="info-icon">📚</div>
+                <h3>Course Resources &amp; Drive</h3>
+                <p>All lecture slides, lab manuals, and previous semester question papers are organized in our Batch Drive.</p>
+                <a href="https://drive.google.com" target="_blank" class="btn btn-primary resource-btn">
+                    📂 Open Batch Google Drive
+                </a>
+            </div>
+
+            <!-- Emergency Blood Bank -->
+            <div class="info-card">
+                <div class="info-icon">🩸</div>
+                <h3>Emergency Blood Support</h3>
+                <p>Any classmate or family member in need of blood can easily filter classmates by blood group in the Directory tab.</p>
+                <button onclick="switchTab('analytics');" class="btn btn-secondary resource-btn">
+                    View Blood Directory
+                </button>
+            </div>
+        </div>
+        <!-- Department Details & Faculty Directory Expandable Container (Hidden by default) -->
+        <div id="deptDetailsContainer" style="display: none;">
+            <!-- Top Action Bar to Close / Hide -->
+            <div class="dept-container-top-bar">
+                <div class="dept-top-bar-title">
+                    <span style="font-size:1.4rem;">🏛️</span>
+                    <strong>UAP CSE Department Details &amp; 39 Active Faculty Directory</strong>
+                </div>
+                <button onclick="toggleDepartmentDetails(false)" class="btn btn-secondary btn-sm" title="Hide / Close Department Details">
+                    ✖ Close / Hide Details
+                </button>
+            </div>
+
+
+        <!-- Department Overview & Leadership Showcase -->
+        <div class="dept-overview-card" id="deptOverviewCard">
+            <div class="dept-overview-header">
+                <div class="dept-logo-title">
+                    <img src="Photo/uap-logo.svg" alt="UAP Emblem" class="dept-badge-logo">
+                    <div>
+                        <h2>Department of Computer Science and Engineering</h2>
+                        <p class="dept-uni-tag">University of Asia Pacific (UAP) &bull; Established 1996 &bull; IEB Accredited</p>
+                    </div>
+                </div>
+                <a href="https://cse.uap-bd.edu/" target="_blank" class="btn btn-secondary btn-sm" title="Visit Official Website">
+                    🌐 cse.uap-bd.edu &rarr;
+                </a>
+            </div>
+
+            <!-- Head of Department Featured Card -->
+            <div class="hod-showcase">
+                <div class="hod-img-col">
+                    <img src="https://cse.uap-bd.edu/media/faculty_photos/DNB1.0.jpg?v=1768203544" alt="Prof. Dr. Nasima Begum" class="hod-photo" onerror="this.src='Photo/default-student.svg'">
+                    <span class="hod-badge">Head of the Department</span>
+                </div>
+                <div class="hod-info-col">
+                    <div class="hod-meta-row">
+                        <div>
+                            <h3>Prof. Dr. Nasima Begum</h3>
+                            <p class="hod-desig">Professor &amp; Head, Department of CSE &bull; PhD</p>
+                        </div>
+                        <div class="hod-contacts">
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=headcse@uap-bd.edu" target="_blank" class="btn btn-email btn-sm" title="Send email to Head of Dept">
+                                ✉️ headcse@uap-bd.edu
+                            </a>
+                            <a href="https://cse.uap-bd.edu/people/faculty/dnb/" target="_blank" class="btn btn-secondary btn-sm" title="View Profile on UAP CSE">
+                                🔗 Profile
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hod-quote-box">
+                        <p>
+                            &ldquo;Welcome to the Department of Computer Science and Engineering (CSE) at University of Asia Pacific (UAP), Bangladesh. The Department started its journey in 1996 by offering B.Sc. Engg. in CSE and later in 2006 added graduate programs. Our department is research-oriented, student-centered, and equipped with state-of-the-art programming, digital electronics, and industry-standard gaming labs.&rdquo;
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vision, Mission & Facilities Pillars -->
+            <div class="dept-pillars-grid">
+                <div class="dept-pillar-card">
+                    <h4>🎯 Department Vision</h4>
+                    <p>
+                        Striving for a pioneer role in ICT through excellence in education, research and development towards preparing graduates as global leaders with quality education, innovative ideas, and collaboration between industry and academia.
+                    </p>
+                </div>
+
+                <div class="dept-pillar-card">
+                    <h4>🚀 Key Facilities &amp; Labs</h4>
+                    <ul class="dept-facilities-list">
+                        <li>🖥️ 5 Dedicated Computer Programming Labs</li>
+                        <li>🔬 Final Year Student's Project &amp; Thesis Lab</li>
+                        <li>⚡ Digital Electronics &amp; Hardware Lab</li>
+                        <li>🎮 Industry-Standard Gaming Lab (ICT Division Supported)</li>
+                        <li>🎓 1500+ Enrolled Students &bull; 39 Active Faculty Members</li>
+                    </ul>
+                </div>
+
+                <div class="dept-pillar-card">
+                    <h4>📍 Contact &amp; Department Office</h4>
+                    <p><strong>Campus Address:</strong> 74/A, Green Road, Farmgate, Dhaka - 1205, Bangladesh</p>
+                    <p><strong>Email:</strong> cse@uap-bd.edu &bull; headcse@uap-bd.edu</p>
+                    <p><strong>Phone:</strong> +880-2-58157091-4, 58157096</p>
+                    <p><strong>Degrees Offered:</strong> B.Sc. in CSE (IEB Accredited) &bull; M.Sc. in CSE</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Faculty Members & Teachers Directory Section -->
+        <div class="faculty-directory-section" id="facultyDirectorySection">
+            <div class="section-title">
+                <h2>👨‍🏫 Active Faculty Members &amp; Teachers Directory</h2>
+                <p>Complete official directory of 39 active full-time faculty members of UAP CSE</p>
+            </div>
+
+            <!-- Faculty Search & Filters Controls -->
+            <div class="controls-card faculty-controls-card">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="facultySearchInput" placeholder="Search teacher by name, designation, qualification, email..." autocomplete="off">
+                    <button id="clearFacultySearchBtn" class="clear-btn" title="Clear search" style="display:none;">&times;</button>
+                </div>
+
+                <div class="filter-group">
+                    <div class="filter-item">
+                        <label for="facultyDesignationFilter">👔 Designation:</label>
+                        <select id="facultyDesignationFilter">
+                            <option value="all">All Designations</option>
+                            <option value="head">Head of Department</option>
+                            <option value="professor">Professor</option>
+                            <option value="associate professor">Associate Professor</option>
+                            <option value="assistant professor">Assistant Professor</option>
+                            <option value="senior lecturer">Senior Lecturer</option>
+                            <option value="lecturer">Lecturer</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-item">
+                        <label for="facultyQualFilter">🎓 Qualification:</label>
+                        <select id="facultyQualFilter">
+                            <option value="all">All Qualifications</option>
+                            <option value="phd">PhD Holders</option>
+                            <option value="msc">Master's / MSc</option>
+                        </select>
+                    </div>
+
+                    <button id="resetFacultyFiltersBtn" class="btn btn-reset">Reset</button>
+                </div>
+
+                <div class="results-bar">
+                    <span id="facultyResultsCount">Showing 39 of 39 Active Faculty Members</span>
+                </div>
+            </div>
+
+            <!-- Faculty Grid -->
+            <div class="faculty-grid" id="facultyGrid">
+                <!-- Dynamically populated from faculty.json by script.js -->
+            </div>
+
+            <!-- No Results message -->
+            <div id="noFacultyResultsMsg" class="no-results" style="display:none;">
+                <div class="no-results-icon">🔎</div>
+                <h3>No faculty members found</h3>
+                <p>Try searching with another name or reset filters.</p>
+                <button onclick="resetFacultyFilters()" class="btn btn-primary">Reset Filters</button>
+            </div>
+        </div>
+
+            <!-- Bottom Action Bar to Close / Hide -->
+            <div class="dept-container-bottom-bar">
+                <button onclick="toggleDepartmentDetails(false)" class="btn btn-secondary">
+                    ▲ Close Department Details &amp; Return to Cards
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<!-- Floating Back to Top Button -->
+<button id="backToTopBtn" class="back-to-top" onclick="scrollToTop()" title="Back to top">
+    ⬆
+</button>
+
+<!-- Toast Notification Container -->
+<div id="toastNotification" class="toast"></div>
+
+<footer>
+    <p>&copy; 2026 UAP CSE Batch 54, Section B &bull; Developed with ❤️ by Sowrov</p>
+</footer>
 
 <script src="script.js"></script>
-
 </body>
 </html>
